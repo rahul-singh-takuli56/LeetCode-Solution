@@ -1,9 +1,14 @@
 class Solution {
 public:
-    // TC->O(nlongn)
-    // but can you optimize i....YES 
     int maxProduct(vector<int>& nums) {
-        sort(nums.rbegin(),nums.rend());
-        return ((nums[0]-1)*(nums[1]-1));
+        priority_queue<int,vector<int>,greater<int>>minh;
+        for(int i=0;i<nums.size();i++){
+            minh.push(nums[i]);
+            if(minh.size()>2)
+                minh.pop();
+        }
+        int maxi=minh.top();
+        minh.pop();
+        return (maxi-1)*(minh.top()-1);
     }
 };
