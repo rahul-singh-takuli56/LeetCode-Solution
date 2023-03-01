@@ -6,7 +6,7 @@ using namespace std;
 class Solution {
     bool solve(int source,int V,vector<int>adj[],vector<int>&vis){
         queue<pair<int,int>>q;
-        vis[source]=true;
+        vis[source]=1;
         q.push({source,-1});
         while(!q.empty()){
             int node=q.front().first;
@@ -27,11 +27,12 @@ class Solution {
     // Function to detect cycle in an undirected graph.
     bool isCycle(int V, vector<int> adj[]) {
         // Code here
+        //using bfs traversal
         vector<int>vis(V+1,0);
         for(int i=0;i<V;i++){
             if(!vis[i]){
                 if(solve(i,V,adj,vis))
-                return true;
+                    return true;
             }
         }
         return false;
