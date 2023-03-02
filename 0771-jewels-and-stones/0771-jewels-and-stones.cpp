@@ -1,14 +1,13 @@
 class Solution {
 public:
-    int numJewelsInStones(string jewels, string stones) {
-        int count=0;
-        //O(n^2)
-        for(int i=0;i<jewels.size();i++){
-            for(int j=0;j<stones.size();j++){
-                if(jewels[i]==stones[j])
-                    count++;
-            }
+    //optimized solution
+    int numJewelsInStones(string J, string S) {
+    int count = 0;
+    for (char s : S) {
+        if (J.find(s) != string::npos) {
+            ++count;
         }
-        return count;
+    }
+    return count;
     }
 };
