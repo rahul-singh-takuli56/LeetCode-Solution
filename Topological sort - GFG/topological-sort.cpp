@@ -5,14 +5,15 @@ using namespace std;
 // } Driver Code Ends
 class Solution
 {
-    void solve(int source,int V,vector<int>adj[],vector<int>&vis,stack<int>&st){
-            vis[source]=1;
-            for(auto it:adj[source]){
-                if(!vis[it]){
-                    solve(it,V,adj,vis,st);
-                }
+    private:
+    void dfs(int node,stack<int>&st,vector<int>adj[],vector<int>&vis){
+        vis[node]=1;
+        for(auto it:adj[node]){
+            if(!vis[it]){
+                dfs(it,st,adj,vis);
             }
-            st.push(source);
+        }
+        st.push(node);
     }
 	public:
 	//Function to return list containing vertices in Topological order. 
@@ -21,17 +22,17 @@ class Solution
 	    // code here
 	    stack<int>st;
 	    vector<int>ans;
-	    vector<int>vis(V+1,0);
+	    vector<int>vis(V,0);
 	    for(int i=0;i<V;i++){
-	        if(!vis[i]){
-	            solve(i,V,adj,vis,st);
-	        }
+	        if(!vis[i])
+	          dfs(i,st,adj,vis);
 	    }
-	    while(!st.empty()){
-	        ans.push_back(st.top());
-	        st.pop();
-	    }
-	    return ans;
+	     while(!st.empty()){
+	         int node=st.top();
+	         ans.push_back(node);
+	         st.pop();
+	     }
+	     return ans;
 	}
 };
 
