@@ -1,34 +1,34 @@
 class Solution {
 public:
-    bool canFinish(int V, vector<vector<int>>& prerequisites) {
-        vector<int>adj[V];
-        //creating adj list
+    // using topo just detect if cycle is present or not 
+    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+        vector<int>adj[n];
         for(auto it:prerequisites){
-            adj[it[0]].push_back(it[1]);
+                adj[it[1]].push_back(it[0]);
         }
-        vector<int>indegree(V,0);
-        queue<int>q;
-        for(int i=0;i<V;i++){
+        vector<int>ind(n,0);
+        for(int i=0;i<n;i++){
             for(auto it:adj[i])
-                indegree[it]++;
-        }
-        for(int i=0;i<V;i++){
-            if(indegree[i]==0)
-                q.push(i);
+                ind[it]++;
         }
         
-        vector<int>topo;
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            if(ind[i]==0)
+                q.push(i);
+        }
+        int count=0;
         while(!q.empty()){
             int node=q.front();
             q.pop();
-            topo.push_back(node);
+            count++;
             for(auto it:adj[node]){
-                indegree[it]--;
-                if(indegree[it]==0)
+                ind[it]--;
+                if(ind[it]==0)
                     q.push(it);
             }
         }
-        if(topo.size()==V)
+        if(count==n)
             return true;
         return false;
     }
