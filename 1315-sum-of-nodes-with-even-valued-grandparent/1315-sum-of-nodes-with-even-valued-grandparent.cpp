@@ -1,17 +1,32 @@
 class Solution {
 public:
-    int sum=0;
+    //bfs se
     int sumEvenGrandparent(TreeNode* root) {
-        solve(root,NULL,NULL);
-        return sum;
-    }
-    void solve(TreeNode*root,TreeNode*parent,TreeNode*grandparent){
-        if(!root)
-            return ;
-        if(grandparent!=NULL and grandparent->val%2==0){
-            sum+=root->val;
+        int sum=0;
+        queue<TreeNode*>q;
+        q.push(root);
+        while(!q.empty()){
+            auto node=q.front();
+            q.pop();
+            if(node->val%2==0){
+                if(node->left!=NULL){
+                    if(node->left->left!=NULL)
+                        sum+=node->left->left->val;
+                    if(node->left->right!=NULL)
+                        sum+=node->left->right->val;
+                }
+                if(node->right!=NULL){
+                    if(node->right->right!=NULL)
+                        sum+=node->right->right->val;
+                    if(node->right->left!=NULL)
+                        sum+=node->right->left->val;
+                }
+            }
+            if(node->left)
+                q.push(node->left);
+            if(node->right)
+                q.push(node->right);
         }
-        solve(root->left,root,parent);
-        solve(root->right,root,parent);
+        return sum;
     }
 };
