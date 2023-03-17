@@ -1,24 +1,25 @@
 class Solution {
 public:
-    TreeNode* solve(vector<int>&inorder, int is,int ie,vector<int>&postorder,int ps,int pe, map<int,int>& mp){
-        if (is > ie || ps > pe) {
-            return nullptr;
-        }
-        TreeNode* root=new TreeNode(postorder[pe]);
-        int inroot=mp[postorder[pe]];
-        int numsleft=inroot-is;
-        root->left=solve(inorder,is,inroot-1,postorder,ps,ps+numsleft-1,mp);
-        root->right=solve(inorder,inroot+1,ie,postorder,ps+numsleft,pe-1,mp);
-        return root;
-    }
-    
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        map<int,int>mp;
-        for(int i=0;i<inorder.size();i++){
-            mp[inorder[i]]=i;
-        }
-        int m=inorder.size();
-        int n=postorder.size();
-        return solve(inorder,0,m-1,postorder,0,n-1,mp);
+        int len=postorder.size();
+        return solve(inorder,postorder,0,len-1,0,len-1);
+    }
+    TreeNode* solve(vector<int>& inorder, vector<int>& postorder, int is, int ie, int ps, int pe) {
+    if (is > ie)
+        return NULL;
+    int rootval = postorder[pe];
+    TreeNode* root = new TreeNode(rootval);
+    int rootind = 0;
+    for (rootind = 0; rootind <= ie; rootind++) {
+        if (inorder[rootind] == rootval)
+            break;
+    }
+    //inorder se he pta leghegha
+    int lefttreesize = rootind - is;
+    int righttreesize = ie - rootind;
+
+    root->left = solve(inorder, postorder, is, rootind - 1, ps, ps + lefttreesize - 1);
+    root->right = solve(inorder, postorder, rootind + 1, ie, pe - righttreesize, pe - 1);
+    return root;
     }
 };
