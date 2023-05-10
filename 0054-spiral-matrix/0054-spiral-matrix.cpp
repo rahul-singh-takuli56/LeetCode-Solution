@@ -1,23 +1,34 @@
 class Solution {
 public:
-    vector<int> spiralOrder(vector<vector<int>>& matrix) {
-    vector<vector<int> > dirs{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-    vector<int> res;
-    int nr = matrix.size();     if (nr == 0) return res;
-    int nc = matrix[0].size();  if (nc == 0) return res;
-    
-    vector<int> nSteps{nc, nr-1};
-    
-    int iDir = 0;   // index of direction.
-    int ir = 0, ic = -1;    // initial position
-    while (nSteps[iDir%2]) {
-        for (int i = 0; i < nSteps[iDir%2]; ++i) {
-            ir += dirs[iDir][0]; ic += dirs[iDir][1];
-            res.push_back(matrix[ir][ic]);
+    vector<int> spiralOrder(vector<vector<int>>& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        int left=0,right=m-1;
+        int top=0,bottom=n-1;
+        
+        vector<int>ans;
+        while(left<=right && top<=bottom){
+        for(int i=left;i<=right;i++){
+            ans.push_back(mat[top][i]);
         }
-        nSteps[iDir%2]--;
-        iDir = (iDir + 1) % 4;
+        top++;
+        for(int i=top;i<=bottom;i++){
+            ans.push_back(mat[i][right]);
+        }
+        right--;
+        if(top<=bottom){
+        for(int i=right;i>=left;i--){
+            ans.push_back(mat[bottom][i]);
+        }
+        bottom--;
+        }
+        if(left<=right){
+        for(int i=bottom;i>=top;i--){
+            ans.push_back(mat[i][left]);
+        }
+        left++;
+            }
+        }
+        return ans;
     }
-    return res;
-}
 };
