@@ -8,7 +8,7 @@ public:
             if(curr->val==curr->next->val){
                 ListNode*temp=curr->next;
                 curr->next=temp->next;
-                delete temp;
+                // delete temp;
             }
             else
                 curr=curr->next;
