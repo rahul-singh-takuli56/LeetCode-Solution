@@ -1,4 +1,5 @@
 class Solution {
+    //using dfs 
     bool dfs(int start,int colour,vector<vector<int>>&graph,vector<int>&col){
         col[start]=colour;
         for(auto it:graph[start]){
@@ -12,7 +13,6 @@ class Solution {
         return true;
     }
 public:
-    //using dfs 
     bool isBipartite(vector<vector<int>>& graph) {
         int n=graph.size();
         vector<int>col(n,-1);
