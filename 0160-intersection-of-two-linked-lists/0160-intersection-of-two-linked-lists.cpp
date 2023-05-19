@@ -11,11 +11,15 @@ public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         if(headA==NULL || headB==NULL)
             return NULL;
-        ListNode*a=headA;
-        ListNode*b=headB;
-        while(a!=b){
-            a= a==NULL?headB:a=a->next;
-            b= b==NULL?headA:b=b->next;
+        ListNode* a=headA;
+        ListNode* b=headB;
+        while(a!=NULL && b!=NULL && a!=b){
+            a=a->next;
+            b=b->next;
+            if(a==b)
+                return a;
+            if(a==NULL) a=headB;
+            if(b==NULL) b=headA;
         }
         return a;
     }
