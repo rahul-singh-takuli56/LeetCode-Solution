@@ -1,15 +1,20 @@
 class Solution {
 public:
-       int rob(vector<int>& nums) {
+    int solve(int ind,vector<int>&nums,vector<int>&dp){
+        if(ind==0)
+            return nums[ind];
+        if(ind<0)
+            return 0;
+        if(dp[ind]!=-1)
+            return dp[ind];
+        int pick=nums[ind]+solve(ind-2,nums,dp);
+        int picknot=solve(ind-1,nums,dp);
+        return dp[ind]=max(pick,picknot);
+    }
+    
+    int rob(vector<int>& nums) {
         int n=nums.size();
         vector<int>dp(n,-1);
-        return solve(nums,n-1,dp);
-    }
-     int solve(vector<int>&nums,int i,vector<int>&dp){
-         if(i<0)
-            return 0;
-         if(dp[i]!=-1)
-             return dp[i];
-        return dp[i]=max(solve(nums,i-2,dp)+nums[i],solve(nums,i-1,dp));
+        return solve(n-1,nums,dp);
     }
 };
