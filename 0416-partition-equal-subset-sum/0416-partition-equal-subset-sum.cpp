@@ -1,35 +1,31 @@
 class Solution {
-    bool subset_sum(vector<int>&arr,int sum,int n){
-        bool dp[n+1][sum+1];
-        for(int i=0;i<n+1;i++){
-            for(int j=0;j<sum+1;j++){
-                if(i==0)
-                    dp[i][j]=false;
-                if(j==0)
-                    dp[i][j]=true;
-            }
-        }
-        for(int i=1;i<n+1;i++){
-            for(int j=1;j<sum+1;j++){
-                if(arr[i-1]<=j)
-                    dp[i][j]=dp[i-1][j-arr[i-1]] || dp[i-1][j];
-                else
-                    dp[i][j]=dp[i-1][j];
-            }
-        }
-        return dp[n][sum];
-    }
 public:
-    // even odd concept
+    bool solve(int ind,int sum,vector<int>&nums,vector<vector<int>>&dp){
+        if(sum==0)
+            return 0;
+        if(ind==0)
+            return (nums[0]==sum);
+        
+        if(dp[ind][sum]!=-1)
+            return dp[ind][sum];
+        
+        bool picknot=solve(ind-1,sum,nums,dp);
+        bool pick=false;
+        if(nums[ind]<=sum)
+            pick=solve(ind-1,sum-nums[ind],nums,dp);
+        return dp[ind][sum] = pick || picknot;
+    }
+    
     bool canPartition(vector<int>& nums) {
         int sum=0;
         int n=nums.size();
         for(int i=0;i<nums.size();i++){
             sum+=nums[i];
         }
+        vector<vector<int>>dp(n,vector<int>(sum,-1));
         if(sum%2!=0)
             return false;
         else
-            return subset_sum(nums,sum/2,n);
+            return solve(n-1,sum/2,nums,dp);
     }
 };
