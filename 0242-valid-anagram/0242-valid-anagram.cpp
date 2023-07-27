@@ -3,10 +3,16 @@ public:
     bool isAnagram(string s, string t) {
         if(s.size()!=t.size())
             return false;
-        sort(s.begin(),s.end());
-        sort(t.begin(),t.end());
-        if(s==t)
-            return true;
-        return false;
+        unordered_map<char,int>mp1,mp2;
+        for(auto it:s)
+            mp1[it]++;
+        for(auto it:t)
+            mp2[it]++;
+        
+        for(auto it:s){
+            if(mp1[it]!=mp2[it])
+                return false;
+        }
+        return true;
     }
 };
