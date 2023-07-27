@@ -3,14 +3,14 @@ public:
     bool isAnagram(string s, string t) {
         if(s.size()!=t.size())
             return false;
-        unordered_map<char,int>mp1,mp2;
-        for(auto it:s)
-            mp1[it]++;
-        for(auto it:t)
-            mp2[it]++;
         
-        for(auto it:s){
-            if(mp1[it]!=mp2[it])
+        vector<int>frq(26,0);
+        for(int i=0;i<s.size();i++){
+            frq[s[i]-'a']++;
+            frq[t[i]-'a']--;
+        }
+        for(int i=0;i<frq.size();i++){
+            if(frq[i]!=0)
                 return false;
         }
         return true;
