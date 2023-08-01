@@ -1,26 +1,29 @@
-    class Solution {
+class Solution {
 public:
-    bool is_palindrone(string &str,int start, int end){
-        int n=str.size();
+    bool is_palindrone(string &s,int start, int end){
+        int n=s.size();
         while(start<end){
-            if(str[start]!=str[end])
+            if(s[start]!=s[end])
                 return false;
-                start++,end--;
-            }
+            start++;
+            end--;
+        }
         return true;
     }
-    
     string longestPalindrome(string s) {
+        int n=s.size();
+        int maxi=1;
         int start=0;
-        int max_length=1;
-        for(int i=0;i<s.size();i++){
-            for(int j=i;j<s.size();j++){
-                if(is_palindrone(s,i,j) && (j-i+1)>max_length){
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                if(is_palindrone(s,i,j) && (j-i+1)>maxi ){
                     start=i;
-                    max_length=j-i+1;
+                    maxi=max(maxi,j-i+1); // (j-i+1 is the lenght of substring)
+                    // cout<<start<<" "<<maxi<<" ";
+                    // cout<<endl;
                 }
             }
         }
-        return s.substr(start,max_length);
+        return s.substr(start,maxi);
     }
 };
