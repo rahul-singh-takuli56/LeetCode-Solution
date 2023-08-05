@@ -1,26 +1,28 @@
+// In O(n)
 class Solution {
 public:
-    int height(TreeNode*node){
-        if(node==NULL)
+    //basically it will calculate the height of tree
+    // and wherever the value of subtree  is greate then 1 it will return -1
+    // if -1 for any subtree more specifically for left or right while backtracking 
+    // it will return -1;
+    
+    int height_tree(TreeNode*root){
+        if(root==NULL)
             return 0;
-        int left=height(node->left);
-        int right=height(node->right);
         
-        return 1+max(left,right);
+        int left=height_tree(root->left);
+        int right=height_tree(root->right);
+        
+        if(left==-1 || right==-1)
+            return -1;
+        
+        if(abs(left-right)>1)
+            return -1;
+        
+        return max(left,right)+1;
     }
     
     bool isBalanced(TreeNode* root) {
-        if(root==NULL)
-            return true;
-        int lh=height(root->left);
-        int rh=height(root->right);
-        
-        if(abs(lh-rh)>1)
-            return false;
-        
-        bool left=isBalanced(root->left);
-        bool right=isBalanced(root->right);
-        
-        return left&&right;
+        return height_tree(root)!=-1; // fun will return -1 if it is balanced
     }
 };
