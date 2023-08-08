@@ -1,19 +1,16 @@
 class Solution {
 public:
-    int searchInsert(vector<int>& arr, int target) {
-        int i=0;
-        int n=arr.size();
-        while(i<n){
-            if(target<arr[i])
-                return 0;
-            else if(target==arr[i])
-                return i;
-            else if(target>arr[n-1])
-                return n;
-            else if(target>arr[i] && target<arr[i+1])
-                return i+1;
-            i++;
+    int searchInsert(vector<int>& nums, int target) {
+        int i=0,j=nums.size()-1;
+        while(i<=j){
+            int mid=i+(j-i)/2;
+            if(nums[mid]==target)
+                return mid;
+            else if(nums[mid]>target)
+                 j=mid-1;
+            else if(nums[mid]<target)
+                i=mid+1;
         }
-        return n;
+        return i; // orj+1
     }
 };
