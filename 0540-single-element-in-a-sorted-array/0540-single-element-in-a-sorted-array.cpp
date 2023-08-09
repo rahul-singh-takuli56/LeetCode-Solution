@@ -1,21 +1,17 @@
 class Solution {
 public:
-    //op method
+    //brute force
     int singleNonDuplicate(vector<int>& nums) {
-        int low=0,high=nums.size()-2; // -2 beacause last element
-        // agr single hogha to hmara low apne aap point kregha
-        // use and in the end we're returning nums[low];
-        while(low<=high){
-            int mid=(low+high)/2;
-            if(nums[mid]==nums[mid^1])
-                //logic of xor use hogha
-                //XOR IMP PROPERTY
-                //ODD^1=ODD-1;
-                //EVEN^1=EVEN+1;
-                low=mid+1;
-            else
-                high=mid-1;
+        unordered_map<int,int>mp;
+        for(int i=0;i<nums.size();i++){
+            mp[nums[i]]++;
         }
-        return nums[low];
+
+        for(auto it:mp){
+            if(it.second==1){
+                return it.first;
+            }
+        }
+        return 0;
     }
 };
