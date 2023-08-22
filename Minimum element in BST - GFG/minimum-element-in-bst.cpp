@@ -96,14 +96,9 @@ int minValue(Node* root) {
     // Code here
     if(!root) return -1;
     int mini=root->data;
-    
-    int left_found=minValue(root->left);
-    if(left_found!=-1)
-        mini=min(mini,left_found);
-        
-    int right_found=minValue(root->right);
-        if(right_found!=-1)
-            mini=min(mini,right_found);
+    while(root->left!=NULL){
+        mini=root->left->data;
+        root=root->left;
+    }
     return mini;
-   
 }
